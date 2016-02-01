@@ -10,7 +10,7 @@
 */
 
 // Variable declaration
-var SANDBOX = "SANDBOX";
+var sandbox = "SANDBOX";
 var LINEAIR = "LINEAIR";
 var GPS_AVAILABLE = 'GPS_AVAILABLE';
 var GPS_UNAVAILABLE = 'GPS_UNAVAILABLE';
