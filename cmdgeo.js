@@ -65,7 +65,7 @@
         }
     };
 
-    var  = new eventTarget();
+    var et = new eventTarget();
 
     var geo =  {
 
@@ -142,8 +142,6 @@
             return Math.round(google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2), 0);
         }
 
-    }
-
         // GOOGLE MAPS FUNCTIES
         /**
          * generate_map(myOptions, canvasId)
@@ -218,12 +216,12 @@
             et.addListener(positionUpdated, update_positie);
         }
 
-        function isNumber(n) {
+        isNumber: function(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
 
         // Update de positie van de gebruiker op de kaart
-        function update_positie(event) {
+        updatePosition: function(event) {
             // use currentPosition to center the map
             var newPos = new google.maps.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
             map.setCenter(newPos);
@@ -232,16 +230,17 @@
 
         // FUNCTIES VOOR DEBUGGING
 
-        function _geo_error_handler(code, message) {
+        geoErrorHandler: function(code, message) {
             debug_message('geo.js error ' + code + ': ' + message);
         }
 
-        function debug_message(message) {
+        debugMessage: function(message) {
             (customDebugging && debugId) ? document.getElementById(debugId).innerHTML: console.log(message);
         }
 
-        function set_custom_debugging(debugId) {
+        setCustomDebugging: function(debugId) {
             debugId = this.debugId;
             customDebugging = true;
         }
+    }
 })
