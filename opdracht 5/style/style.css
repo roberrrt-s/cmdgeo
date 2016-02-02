@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+	background-color: #EEEEEE;
+}
+
+#main__nav ul {
+	margin: 0;
+	padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+}
+
+#main__nav a {
+	background-color: #F00;
+	width: 20%;
+	height: 50px;
+	padding: 10px;
+	margin: 10px;
+	text-align: center;
+	color: #000;
+	text-decoration: none;
+}
+
+#main__start {
+	background-color: #FF0;
+	height: 500px;
+	width: 100wh;
+}
+
+#main__list {
+	background-color: #0FF;
+	height: 500px;
+	width: 100vw;
+}
