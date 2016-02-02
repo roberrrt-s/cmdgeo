@@ -19,13 +19,13 @@
     var gpsUnavailable = 'gpsUnavailable';
     var positionUpdated = 'positionUpdated';
     var refreshRate = 1000;
-    var currentPosition, 
-        currentPositionMarker,
-        customDebugging,
-        debugId,
-        map,
-        interval,
-        intervalCounter,
+    var currentPosition =
+        currentPositionMarker =
+        customDebugging =
+        debugId =
+        map =
+        interval =
+        intervalCounter =
         updateMap = false;
 
     var locatieRij, markerRij = [];
