@@ -32,10 +32,10 @@ var routes = {
 // Declaring the sections object
 var sections = {
 	toggle: function(route) {
-		console.log("Toggle between the sections, displaying:" + route)
+		console.log("Toggle between the sections, displaying: " + route)
 
 		// Grabbing all sections in a variable
-		var a = document.getElementsByTagName("section")
+		var a = document.querySelectorAll("body > section")
 
 		// Looping through all routes, while skipping the first one, the navigation by starting i at 1
 		for (var i = 1; i < a.length; i++) {
