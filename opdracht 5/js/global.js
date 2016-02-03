@@ -4,7 +4,7 @@
 	"use strict"
 
 // Declaring the application object
-var app = {
+var global = {
 	init: function() {
 		// Initializing application by calling the routes object.
 		console.log("Initialize application")
@@ -21,13 +21,12 @@ var routes = {
 		// it invokes an anonymous function that passes to the sections object to toggle between the elements, using the window's hash as a parameter
 		window.addEventListener("hashchange", function(event) {
 
+			// The original URL's in the navigation contain an !, this to preventDefault() the scrolling, when not using jquery.
 			sections.toggle(window.location.hash.replace(/^#!/, ''))		
-
-			console.log(window.location.hash.replace(/^#!/, ''))
 
 		})
 
-		// We have to check if the user comes from a place that already included a hash!
+		// We have to check if the user comes from a place that already included a hash, removing the ! again
 		sections.toggle(window.location.hash.replace(/^#!/, ''))
 	}
 }
@@ -43,7 +42,7 @@ var sections = {
 		// Looping through all routes, while skipping the first one, the navigation by starting i at 1
 		for (var i = 1; i < a.length; i++) {
 
-			// Checking if the id of the section corresponds with the route parameter (minus the #)
+			// Checking if the id of the section corresponds with the route parameter
 		    if(a[i].id === route) {
 		    	a[i].style.display = "";
 		    }
@@ -57,7 +56,7 @@ var sections = {
 	}
 }
 
-app.init();
+global.init();
 
 }());
 
