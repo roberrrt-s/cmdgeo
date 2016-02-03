@@ -33,12 +33,12 @@
     // Event functies - bron: http://www.nczonline.net/blog/2010/03/09/custom-events-in-javascript/ Copyright (c) 2010 Nicholas C. Zakas. All rights reserved. MIT License
     // Gebruik: et.addListener('foo', handleEvent); et.fire('event_name'); et.removeListener('foo', handleEvent);
 
-    function eventTarget() {
+    function EventTarget() {
         this.listeners = {}
     }
 
-    eventTarget.prototype = {
-        constructor: eventTarget,
+    EventTarget.prototype = {
+        constructor: EventTarget,
         addListener: function(a, c) {
             "undefined" == typeof this.listeners[a] && (this.listeners[a] = []);
             this.listeners[a].push(c)
@@ -67,7 +67,7 @@
         }
     };
 
-    var et = new eventTarget();
+    var et = new EventTarget();
 
     var geo =  {
 
