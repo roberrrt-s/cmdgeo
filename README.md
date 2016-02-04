@@ -35,6 +35,7 @@ Daarnaast blijft de PLS van een site (page loading speed) altijd lager met een j
 ##### Voordelen:
 
 Als we gmail als voorbeeld nemen als meest succesvolle "Single Page Application" kunnen we al snel een aantal voordelen noemen:
+
  - De pagina hoeft niet te herladen bij een nieuwe (AJAX) request.
  - De paginastructuur volgens een MVC model zorgt voor een duidelijke scheiding tussen content en UI. Men kan rustig 
 
@@ -56,8 +57,5 @@ Als we gmail als voorbeeld nemen als meest succesvolle "Single Page Application"
 
  - http://stackoverflow.com/questions/21862054/single-page-application-advantages-and-disadvantages
  - https://developer.mozilla.org/en-US/docs/Web/API/History_API
-<<<<<<< HEAD
  - http://adamsilver.io/articles/the-disadvantages-of-single-page-applications/
  - https://www.quora.com/What-are-the-advantages-of-SPA-single-page-application-over-a-normal-web-application
-=======
->>>>>>> origin/master
