@@ -45,16 +45,19 @@ Als we gmail als voorbeeld nemen als meest succesvolle "Single Page Application"
 
 ## Credits:
 
-	### 2
+### 2
 
  - http://lea.verou.me/2015/04/jquery-considered-harmful/
  - http://programmers.stackexchange.com/questions/166273/advantages-of-using-pure-javascript-over-jquery
  - http://youmightnotneedjquery.com/
  - https://mathiasbynens.be/demo/jquery-size
 
-	### 3
+### 3
 
  - http://stackoverflow.com/questions/21862054/single-page-application-advantages-and-disadvantages
  - https://developer.mozilla.org/en-US/docs/Web/API/History_API
+<<<<<<< HEAD
  - http://adamsilver.io/articles/the-disadvantages-of-single-page-applications/
  - https://www.quora.com/What-are-the-advantages-of-SPA-single-page-application-over-a-normal-web-application
+=======
+>>>>>>> origin/master

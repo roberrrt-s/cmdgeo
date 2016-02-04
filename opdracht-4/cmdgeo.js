@@ -1,14 +1,3 @@
-/***
- * cmdaan.js
- *   Bevat functies voor CMDAan stijl geolocatie welke uitgelegd
- *   zijn tijdens het techniek college in week 5.
- *
- *   Author: J.P. Sturkenboom <j.p.sturkenboom@hva.nl>
- *   Credit: Dive into html5, this.js, Nicholas C. Zakas
- *
- *   Copyleft 2012, all wrongs reversed.
- */
-
 (function() {
     "use strict"
 
@@ -19,19 +8,15 @@
     var gpsUnavailable = 'gpsUnavailable';
     var positionUpdated = 'positionUpdated';
     var refreshRate = 1000;
-    var currentPosition =
-        currentPositionMarker =
-        customDebugging =
-        debugId =
-        map =
-        interval =
-        intervalCounter =
-        updateMap = false;
-
+    var currentPosition = false;
+    var currentPositionMarker = false;
+    var customDebugging = false;
+    var debugId = false;
+    var map = false;
+    var interval = false;
+    var intervalCounter = false;
+    var updateMap = false;
     var locatieRij, markerRij = [];
-
-    // Event functies - bron: http://www.nczonline.net/blog/2010/03/09/custom-events-in-javascript/ Copyright (c) 2010 Nicholas C. Zakas. All rights reserved. MIT License
-    // Gebruik: et.addListener('foo', handleEvent); et.fire('event_name'); et.removeListener('foo', handleEvent);
 
     function EventTarget() {
         this.listeners = {}
@@ -92,11 +77,19 @@
         },
 
         // Vraag de huidige positie aan this.js, stel een callback in voor het resultaat
-        updatePosition: function() {
+        updateCurrentPosition: function() {
             intervalCounter++;
             geoPositionJs.getCurrentPosition(this.setPosition, debug.errorHandler, {
                 enableHighAccuracy: true
             });
+        },
+
+        // Update de positie van de gebruiker op de kaart
+        updatePosition: function(event) {
+            // use currentPosition to center the map
+            var newPos = new google.maps.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
+            map.setCenter(newPos);
+            currentPositionMarker.this.setPosition(newPos);
         },
 
         // Callback functie voor het instellen van de huidige positie, vuurt een event af
@@ -144,19 +137,6 @@
             return Math.round(google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2), 0);
         },
 
-        // GOOGLE MAPS FUNCTIES
-        /**
-         * generate_map(myOptions, canvasId)
-         *  roept op basis van meegegeven opties de google maps API aan
-         *  om een kaart te genereren en plaatst deze in het HTML element
-         *  wat aangeduid wordt door het meegegeven id.
-         *
-         *  @param myOptions:object - een object met in te stellen opties
-         *      voor de aanroep van de google maps API, kijk voor een over-
-         *      zicht van mogelijke opties op http://
-         *  @param canvasID:string - het id van het HTML element waar de
-         *      kaart in ge-rendered moet worden, <div> of <canvas>
-         */
 
         generateMap: function(myOptions, canvasId) {
             // TODO: Kan ik hier asynchroon nog de google maps api aanroepen? dit scheelt calls
@@ -216,16 +196,8 @@
 
             // Zorg dat de kaart geupdated wordt als het positionUpdated event afgevuurd wordt
             et.addListener(positionUpdated, this.updatePosition);
-        },
-
-        // Update de positie van de gebruiker op de kaart
-        updatePosition: function(event) {
-            // use currentPosition to center the map
-            var newPos = new google.maps.LatLng(currentPosition.coords.latitude, currentPosition.coords.longitude);
-            map.setCenter(newPos);
-            currentPositionMarker.this.setPosition(newPos);
         }
-    }
+    };
 
         // FUNCTIES VOOR DEBUGGING
 
@@ -251,6 +223,4 @@
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
     }
-
-
 }());
