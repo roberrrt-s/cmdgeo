@@ -73,38 +73,38 @@
 
     // Test of GPS beschikbaar is (via geo.js) en vuur een event af
         init: function() {
-            this.debugMessage("Controleer of GPS beschikbaar is...");
+            debug.message("Controleer of GPS beschikbaar is...");
 
             et.addListener(gpsAvailable, this.startInterval);
             et.addListener(gpsUnavailable, function() {
-                this.debugMessage('GPS is niet beschikbaar.')
+                debug.message('GPS is niet beschikbaar.')
             });
 
             (geoPositionJs.init()) ? et.fire(gpsAvailable): et.fire(gpsUnavailable);
-        }
+        },
 
         // Start een interval welke op basis van refreshRate de positie updated
         startInterval: function(event) {
-            this.debugMessage("GPS is beschikbaar, vraag positie.");
+            debug.message("GPS is beschikbaar, vraag positie.");
             this.updatePosition();
             interval = self.setInterval(this.updatePosition, refreshRate);
             et.addListener(positionUpdated, this.checkLocations);
-        }
+        },
 
         // Vraag de huidige positie aan this.js, stel een callback in voor het resultaat
         updatePosition: function() {
             intervalCounter++;
-            geoPositionJs.getCurrentPosition(this.setPosition, this.errorHandler, {
+            geoPositionJs.getCurrentPosition(this.setPosition, debug.errorHandler, {
                 enableHighAccuracy: true
             });
-        }
+        },
 
         // Callback functie voor het instellen van de huidige positie, vuurt een event af
         setPosition: function(position) {
             currentPosition = position;
             et.fire("positionUpdated");
-            this.debugMessage(intervalCounter + " positie lat:" + position.coords.latitude + " long:" + position.coords.longitude);
-        }
+            debug.message(intervalCounter + " positie lat:" + position.coords.latitude + " long:" + position.coords.longitude);
+        },
 
         // Controleer de locaties en verwijs naar een andere pagina als we op een locatie zijn
         checkLocations: function(event) {
@@ -125,24 +125,24 @@
                         try {
                             (localStorage[locaties[i][0]] == "false") ? localStorage[locaties[i][0]] = 1: localStorage[locaties[i][0]]++;
                         } catch (error) {
-                            this.debugMessage("Localstorage kan niet aangesproken worden: " + error);
+                            debug.message("Localstorage kan niet aangesproken worden: " + error);
                         }
 
                         // TODO: Animeer de betreffende marker
 
                         window.location = locaties[i][1];
-                        this.debugMessage("Speler is binnen een straal van " + locaties[i][2] + " meter van " + locaties[i][0]);
+                        debug.message("Speler is binnen een straal van " + locaties[i][2] + " meter van " + locaties[i][0]);
                     }
                 }
             }
-        }
+        },
 
         // Bereken het verchil in meters tussen twee punten
         calculateDistance: function(p1, p2) {
             var pos1 = new google.maps.LatLng(p1.coords.latitude, p1.coords.longitude);
             var pos2 = new google.maps.LatLng(p2.coords.latitude, p2.coords.longitude);
             return Math.round(google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2), 0);
-        }
+        },
 
         // GOOGLE MAPS FUNCTIES
         /**
@@ -160,19 +160,19 @@
 
         generateMap: function(myOptions, canvasId) {
             // TODO: Kan ik hier asynchroon nog de google maps api aanroepen? dit scheelt calls
-            this.debugMessage("Genereer een Google Maps kaart en toon deze in #" + canvasId)
+            debug.message("Genereer een Google Maps kaart en toon deze in #" + canvasId)
             map = new google.maps.Map(document.getElementById(canvasId), myOptions);
 
             var routeList = [];
             // Voeg de markers toe aan de map afhankelijk van het tourtype
-            this.debugMessage("Locaties intekenen, tourtype is: " + tourType);
+            debug.message("Locaties intekenen, tourtype is: " + tourType);
             for (var i = 0; i < locaties.length; i++) {
 
                 // Met kudos aan Tomas Harkema, probeer local storage, als het bestaat, voeg de locaties toe
                 try {
-                    (localStorage.visited == undefined || this.isNumber(localStorage.visited)) ? localStorage[locaties[i][0]] = false: null;
+                    (localStorage.visited == undefined || util.isNumber(localStorage.visited)) ? localStorage[locaties[i][0]] = false: null;
                 } catch (error) {
-                    this.debugMessage("Localstorage kan niet aangesproken worden: " + error);
+                    debug.message("Localstorage kan niet aangesproken worden: " + error);
                 }
 
                 var markerLatLng = new google.maps.LatLng(locaties[i][3], locaties[i][4]);
@@ -194,7 +194,7 @@
             // TODO: Kleur aanpassen op het huidige punt van de tour
             if (tourType == linear) {
                 // Trek lijnen tussen de punten
-                this.debugMessage("Route intekenen");
+                debug.message("Route intekenen");
                 var route = new google.maps.Polyline({
                     clickable: false,
                     map: map,
@@ -216,11 +216,7 @@
 
             // Zorg dat de kaart geupdated wordt als het positionUpdated event afgevuurd wordt
             et.addListener(positionUpdated, this.updatePosition);
-        }
-
-        isNumber: function(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        }
+        },
 
         // Update de positie van de gebruiker op de kaart
         updatePosition: function(event) {
@@ -229,20 +225,32 @@
             map.setCenter(newPos);
             currentPositionMarker.this.setPosition(newPos);
         }
+    }
 
         // FUNCTIES VOOR DEBUGGING
 
+    var debug = {
         errorHandler: function(code, message) {
-            this.debugMessage('this.js error ' + code + ': ' + message);
-        }
+            debug.message('this.js error ' + code + ': ' + message);
+        },
 
-        debugMessage: function(message) {
+        message: function(message) {
             (customDebugging && debugId) ? document.getElementById(debugId).innerHTML: console.log(message);
-        }
+        },
 
         setCustomDebugging: function(debugId) {
             debugId = this.debugId;
             customDebugging = true;
         }
     }
+
+        // FUNCTIES VOOR UTILITY
+
+    var util = {
+        isNumber: function(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+    }
+
+
 }());

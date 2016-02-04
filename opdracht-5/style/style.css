@@ -7,7 +7,7 @@ body {
 }
 
 #main__nav ul {
-	margin: 0;
+	margin: 10px;
 	padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -17,10 +17,9 @@ body {
 
 #main__nav a {
 	background-color: #F00;
-	width: 20%;
 	height: 50px;
-	padding: 10px;
-	margin: 10px;
+	padding: 20px 50px 20px 50px;
+	margin: 20px;
 	text-align: center;
 	color: #000;
 	text-decoration: none;

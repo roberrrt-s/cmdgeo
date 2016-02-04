@@ -22,12 +22,23 @@ var routes = {
 		window.addEventListener("hashchange", function(event) {
 
 			// The original URL's in the navigation contain an !, this to preventDefault() the scrolling, when not using jquery.
-			sections.toggle(window.location.hash.replace(/^#!/, ''))		
+			sections.toggle(window.location.hash)		
 
 		})
 
+		// Experimental code to remove the jumping between anchor hooks all together.		
+		/*
+		var links = document.querySelectorAll("a[href*='#']")
+
+		for (var i = 0; i < links.length; i++) {
+			links[i].addEventListener("click", function(event) {
+				event.preventDefault();
+			})
+		}
+		*/
+
 		// We have to check if the user comes from a place that already included a hash, removing the ! again
-		sections.toggle(window.location.hash.replace(/^#!/, ''))
+		sections.toggle(window.location.hash)
 	}
 }
 
@@ -43,7 +54,7 @@ var sections = {
 		for (var i = 1; i < a.length; i++) {
 
 			// Checking if the id of the section corresponds with the route parameter
-		    if(a[i].id === route) {
+		    if(a[i].id === route.substr(1)) {
 		    	a[i].style.display = "";
 		    }
 		    // Else, remove the visibility
