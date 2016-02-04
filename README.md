@@ -37,11 +37,16 @@ Daarnaast blijft de PLS van een site (page loading speed) altijd lager met een j
 Als we gmail als voorbeeld nemen als meest succesvolle "Single Page Application" kunnen we al snel een aantal voordelen noemen:
 
  - De pagina hoeft niet te herladen bij een nieuwe (AJAX) request.
- - De paginastructuur volgens een MVC model zorgt voor een duidelijke scheiding tussen content en UI. Men kan rustig 
+ - De paginastructuur volgens een MVC model zorgt voor een duidelijke scheiding tussen content en UI. Men kan rustig
+ - Je werk blijft overzichtelijk, mits goed geindenteerd
 
  (Fun fact: SPA's waren vroegâh fantastisch qua linkbuilding model, alle URL's verwezen namelijk naar zichzelf intern, dus scoorden deze uitstekend in een SERP)
 
 ##### Nadelen:
+
+- Als de hele pagina wordt vernieuwd moet hij volledig opnieuw geladen worden, zolang er geen cache wordt opgeslagen.
+- Zodra de pagina groter wordt, en meer en meer pagina's worden toegevoegd kan het bestand chaotisch en log worden, omdat er meer en meer code ontstaat.
+- Omdat de pagina zelf maar uit 1 pagina bestaat is er momenteel qua SEO in Google ingewikkelder uit te leggen, SEO is vrij ingewikkeld omdat je niet per pagina specifieke keywords kan invoegen.
 
 
 ## Credits:
