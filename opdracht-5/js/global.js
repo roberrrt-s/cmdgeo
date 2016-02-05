@@ -1,7 +1,7 @@
 // IIFE to avoid global variables
 (function() {
-	// Strict mode at the top of this function to enable this for the entire document
-	"use strict";
+    // Strict mode at the top of this function to enable this for the entire document
+    "use strict";
 
     // Declaring the application object
     var global = {
@@ -10,27 +10,27 @@
             console.log("Initialize application");
             routes.init();
         }
-    }
+    };
 
     // Declaring the routes object
     var routes = {
-	    init: function() {
-		    console.log("Initialize routes");
+        init: function() {
+            console.log("Initialize routes");
 
             // Adding an event listener to the window, which triggers when the hash (#) changes.
             // it invokes an anonymous function that passes to the sections object to toggle between the elements, using the window's hash as a parameter
             window.addEventListener("hashchange", function(event) {
                 // The original URL's in the navigation contain an !, this to preventDefault() the scrolling, when not using jquery.
-                sections.toggle(window.location.hash);	
-		    });
+                sections.toggle(window.location.hash);
+            });
 
             // We have to check if the user comes from a place that already included a hash, removing the ! again
             sections.toggle(window.location.hash);
             this.createNav();
-	    },
+        },
 
-	    // Generating a navigation structure, based upon 
-	    createNav: function() {
+        // Generating a navigation structure, based upon
+        createNav: function() {
             console.log("Creating the navigation based on the sections");
 
             // Variable a is an array that contains all pages on the website (as defined as sections)
@@ -51,7 +51,7 @@
                     });
                 }
             }
-	    }
+        }
     }
 
     // Declaring the sections object
