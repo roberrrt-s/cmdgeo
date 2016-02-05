@@ -15,7 +15,7 @@ body {
     list-style: none;
 }
 
-#main__nav a {
+#main__nav li {
 	background-color: #F00;
 	height: 50px;
 	padding: 20px 50px 20px 50px;
@@ -23,6 +23,7 @@ body {
 	text-align: center;
 	color: #000;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 #main__start {
@@ -33,6 +34,18 @@ body {
 
 #main__list {
 	background-color: #0FF;
+	height: 500px;
+	width: 100vw;
+}
+
+#main__test {
+	background-color: #033;
+	height: 500px;
+	width: 100vw;
+}
+
+#main__random {
+	background-color: #33F;
 	height: 500px;
 	width: 100vw;
 }

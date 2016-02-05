@@ -26,31 +26,45 @@ var routes = {
 
 		})
 
-		// Experimental code to remove the jumping between anchor hooks all together.		
-		/*
-		var links = document.querySelectorAll("a[href*='#']")
-
-		for (var i = 0; i < links.length; i++) {
-			links[i].addEventListener("click", function(event) {
-				event.preventDefault();
-			})
-		}
-		*/
-
 		// We have to check if the user comes from a place that already included a hash, removing the ! again
 		sections.toggle(window.location.hash);
+		this.createNav()
+	},
+
+	// Generating a navigation structure, based upon 
+	createNav: function() {
+		console.log("Creating the navigation based on the sections");
+
+		// Variable a is an array that contains all pages on the website (as defined as sections)
+		// Variable b is the navigation container
+		var a = document.querySelectorAll("body > section");
+		var b = document.getElementById("nav__container");
+
+		// Looping through all sections, and creating navigation elements based upon them
+		for (var i = 0; i < a.length; i++) {
+			if(a[i].id !== "main__nav") {
+				var c = document.createElement('li');
+				c.appendChild(document.createTextNode(a[i].id.substr(6)) );
+				b.appendChild(c)
+
+				// Adding a click to each section.
+				c.addEventListener("click", function() {
+					var self = this;
+					window.location.hash = "#main__" + self.innerHTML
+				})
+			}
+		}
 	}
+
 }
 
 // Declaring the sections object
 var sections = {
 	toggle: function(route) {
-		console.log("Toggle between the sections, displaying: " + route)
+		console.log("Toggling between the sections")
 
 		// If route is null, route is #main__start
-	    if(route) {
-	    	var route = route;
-	    } else {
+	    if(!route) {
 	    	var route = '#main__start';
 	    }
 
@@ -58,17 +72,21 @@ var sections = {
 		var a = document.querySelectorAll("body > section")
 
 		// Looping through all routes, while skipping the first one, the navigation by starting i at 1
-		for (var i = 1; i < a.length; i++) {
+		for (var i = 0; i < a.length; i++) {
 
-			// Checking if the id of the section corresponds with the route parameter
-		    if(a[i].id === route.substr(1)) {
-		    	a[i].style.display = "";
-		    }
-		    // Else, remove the visibility
+			// Removing the navigation from the toggle
+			if(a[i].id !== "main__nav") {
 
-		    else {
-		    	a[i].style.display = "none";
-		    };
+				// Checking if the id of the section corresponds with the route parameter
+			    if(a[i].id === route.substr(1)) {
+			    	a[i].style.display = "";
+			    }
+
+			    // Else, remove the visibility
+			    else {
+			    	a[i].style.display = "none";
+			    };
+			}
 		}
 
 		// I really need to fix this stuff.
@@ -78,9 +96,3 @@ var sections = {
 global.init();
 
 }());
-
-// Raymond's code review:
-// Omdat je zoveel comments overal heb staan, doe ik het maar even onderaan.
-// Ten eerste, op refresh zonder hashtag laadt de applicatie geen van beide schermen.
-// Dat komt doordat je in je if else statement in je for loop in sections.toggle niet kijkt naar of er wel een route is.
-// PS. let op je punt kommas
