@@ -75,9 +75,9 @@
 
                     // Checking if the id of the section corresponds with the route parameter
                     if(a[i].id === route.substr(1)) {
-                        a[i].style.display = "";
+                        a[i].classList.remove = "do-not-display-this";
                     } else {
-                        a[i].style.display = "none";
+                        a[i].classList.add = "do-not-display-this";
                     }
                 }
             }
