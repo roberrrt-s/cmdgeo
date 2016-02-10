@@ -1,9 +1,21 @@
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
 	background-color: #EEEEEE;
+}
+
+nav:first-letter {
+	text-transform: capitalize;
+}
+
+body > section:not(:first-child) {
+	padding: 1em;
+	height: 500px;
+	width: 100vw;
 }
 
 #main__nav ul {
@@ -26,28 +38,23 @@ body {
 	cursor: pointer;
 }
 
-#main__start {
-	background-color: #FF0;
-	height: 500px;
-	width: 100vw;
+form {
+	max-width: 30em;
+	margin: 1em;
 }
 
-#main__list {
-	background-color: #0FF;
-	height: 500px;
-	width: 100vw;
+fieldset {
+	padding: 1em;
 }
 
-#main__test {
-	background-color: #033;
-	height: 500px;
-	width: 100vw;
+#result > * {
+	float: left;
 }
 
-#main__random {
-	background-color: #33F;
-	height: 500px;
-	width: 100vw;
+.avatar-image {
+	max-width: 100px;
+	max-height: 100px;
+	margin: 1em;
 }
 
 .do-not-display-this {
