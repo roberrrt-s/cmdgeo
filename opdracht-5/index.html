@@ -10,16 +10,39 @@
 	</head>
 	<body>
 		<section id="main__nav">
+			<h1>Github CMDA viewer</h1>
 			<nav>
 				<ul id="nav__container">
+					<li id="home"><a href="#home">Home</a></li>
+					<li id="query"><a href="#query">Search for user</a></li>
+					<li id="list"><a href="#list">List of your searches</a></li>
+					<li id="issues"><a href="#issues">CMDA github issues</a></li>
 				</ul>
 			</nav>
 		</section>
-		<section id="main__start"></section>
-		<section id="main__list"></section>
-		<section id="main__random"></section>
-		<section id="main__test"></section>
-
+		<section id="main__home">
+			<h1>Hello world</h1>
+			<p> I should probably include some information here later.. </p>
+		</section>
+		<section id="main__list">
+			<nav>
+				<ul id="list-container">
+				</ul>
+			</nav>
+		</section>
+		<section id="main__query">
+			<form>
+				<fieldset>
+				<legend>request a username to query</legend>
+					Github username:<br>
+					<input id="post-gitname" type="text" name="username"><br>
+					<input id="post-submit" type="submit" value="Submit">
+				</fieldset>
+			</form>	
+			<section id="result"></section>
+		</section>
+		<section id="main__issues">
+		</section>
 
 		<script type="text/javascript" src="js/global.js"></script>
 	</body>
