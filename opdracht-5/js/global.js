@@ -58,18 +58,38 @@
 					break;
 				case '#issues':
 				console.log("I have issues!")
+
+				if(localStorage.getItem("issuedata")) {
+					console.log("LS item exist")
+					data.issues = util.parse(localStorage.getItem('issuedata'));
+					issues.result();
+				}
+				else {
+					console.log("LS item does not")
+
+					var total = [];
+
 					for (var i = 0; i < data.repos.length; i++) {
-						data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
+						var promised = data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
 							var parsed = util.parse(e.target.response);
 							for(var j = 0; j < parsed.length; j++) {
 								data.issues.push(parsed[j]);
-								issues.result();
+								
 							}
+
+						total.push(promised)
+
+						Promise.all(total).then(function() {
+							issues.result();
+							localStorage.setItem('issuedata', util.stringify(data.issues));
+						})
+
 
 						}, function(e) {
 							console.log(e)
-						});
+						})
 					}
+				}
 
 					worker.init()
 
@@ -128,6 +148,8 @@
 
 		show: function(data) {
 			var info = util.parse(data)
+
+			console.log(info)
 
 			if(info.login) {
 				var result = document.getElementById("result").innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
@@ -220,6 +242,9 @@
 					issues.result();
 				}
 			}
+
+			localStorage.setItem('issuedata', util.stringify(data.issues));
+
 		},
 
 		events: function() {
