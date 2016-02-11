@@ -9,7 +9,6 @@
 			// Initializing application by calling the routes object.
 			console.log("Initialize application");
 			data.init();
-			worker.init()
 			routes.init();
 		}
 	};
@@ -21,10 +20,12 @@
 				event.preventDefault()
 
 				var username = document.getElementById("post-gitname").value
+
 				if(username) {
 					window.location.hash = "query&user=" + username;
-					data.request(username, 'GET', 'https://api.github.com/users/' + username)
+					data.request(username, 'GET', 'https://api.github.com/users/' + username + '?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80')
 				}
+
 			});
 		},
 
@@ -43,32 +44,67 @@
 		},
 
 		display: function(data) {
+
 			var info = this.parse(data)
-			var result = document.getElementById("result").innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
+
+			if(info.login) {
+				var result = document.getElementById("result").innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
+			}
+			else {
+				this.store.pop();
+				var result = document.getElementById("result").innerHTML = 'User does not exist'
+			}
 		},
 
-		store: []
+		store: [],
+		issues: [],
+		repos: ["roberrrt-s", "RaymondKorrel", "ju5tu5"]
 	};
 
 	var list = {
-		generate: function() {
-
-			var listed = document.getElementById("list-container")
+		search: function() {
+			
+			var listed = document.getElementById("search-container")
 
 			while(listed.firstChild) {
 				listed.removeChild(listed.firstChild);
-			}
+			}	
 
 			for (var i = 0; i < data.store.length; i++) {
+				
 				var parsed = data.parse(data.store[i])
 
-
 				var li = document.createElement("li");
-				var content = document.createTextNode(parsed.name)
+				var content = document.createTextNode(parsed.login)
 
 				li.appendChild(content)
 				listed.appendChild(li)
 			}
+		},
+		cleanRepos: function() {
+			var listed = document.getElementById("issue-container")
+
+			while(listed.firstChild) {
+				listed.removeChild(listed.firstChild);
+			}	
+		}
+
+		repos: function() {
+			var listed = document.getElementById("issue-container")
+
+			var parsed = (data.parse(data.issues))
+
+			console.log(parsed[3])
+
+			for (var i = 0; i < parsed.length; i++) {
+				
+				var li = document.createElement("li");
+				var content = document.createTextNode(parsed[i].name)
+
+				li.appendChild(content)
+				listed.appendChild(li)
+			}
+
 		}
 	};
 
@@ -90,7 +126,6 @@
 	};
 
 	var worker = {
-
 		init: function() {
 			this.update = new Worker("js/update.js");
 			this.events()
@@ -98,10 +133,25 @@
 
 		events: function() {
 			this.update.onmessage = function(e) {
-				console.log('worker test', e.data);
+				for (var i = 0; i < data.repos.length; i++) {
+					data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
+						if(data.issues.indexOf(e.target.response) === -1) {
+							data.issues.splice(data.issues.indexOf(e.target.response), 1)
+							data.issues.push(e.target.response);			
+							var listed = document.getElementById("issue-container")
+							list.repos();
+							console.log("updated new data")
+						}
+						else {
+							console.log("nothing new here")
+						}
+					}, function(e) {
+						console.log(e)
+					});
+				}
 			}
 			this.update.onerror = function(e) {
-				console.log(e);
+				console.log(e.message);
 			}
 		},
 	};
@@ -112,7 +162,6 @@
 			console.log("Toggling between the sections")
 
 			var result = document.getElementById("result");
-
 			while(result.firstChild) {
 				result.removeChild(result.firstChild);
 			}
@@ -125,7 +174,7 @@
 			if(route.indexOf("#query&user=") === 0) {
 				var username = route.substring(12)
 				
-				data.request(username, 'GET', 'https://api.github.com/users/' + username).then(function(e) {
+				data.request(username, 'GET', 'https://api.github.com/users/' + username +'?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
 					data.store.push(e.target.response);
 					data.display(e.target.response)
 				}, function(e) {
@@ -141,7 +190,34 @@
 			}
 
 			if(route.indexOf("#list") === 0) {
-				list.generate()
+				list.search()
+			}
+
+			if(worker.update) {
+				worker.update.terminate();
+				console.log("Terminated worker")
+			}
+
+			if(route.indexOf("#issues") === 0) {
+				
+				for (var i = 0; i < data.repos.length; i++) {
+					data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
+						if(data.issues.indexOf(e.target.response) === -1) {
+							data.issues.splice(data.issues.indexOf(e.target.response), 1)
+							data.issues.push(e.target.response);
+							var listed = document.getElementById("issue-container")
+							list.repos()
+						}
+						else {
+							console.log("nothing new here")
+						}
+					}, function(e) {
+						console.log(e)
+					});
+				}
+
+				worker.init()
+				console.log("Initiated worker")
 			}
 
 			// adding the BEM structure
