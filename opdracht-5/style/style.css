@@ -2,10 +2,23 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: sans-serif;
 }
 
 body {
 	background-color: #EEEEEE;
+}
+
+table {
+	padding: 0;
+	border: 0;
+	margin: auto;
+}
+
+tr, th, td {
+	margin: 0;
+	padding: 0.3em;
+	border: 1px solid #000
 }
 
 nav:first-letter {
@@ -14,8 +27,12 @@ nav:first-letter {
 
 body > section:not(:first-child) {
 	padding: 1.5em;
-	height: 500px;
+	height: auto;
 	width: 100vw;
+}
+
+section > p {
+	text-align: center;
 }
 
 #main__nav ul {
@@ -59,4 +76,9 @@ fieldset {
 
 .do-not-display-this {
 	display: none;
+}
+
+.has-issues {
+	font-size: 1.2em;
+	color: #F00;
 }
