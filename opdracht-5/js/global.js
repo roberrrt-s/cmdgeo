@@ -3,7 +3,6 @@
 
 	var global = {
 		init: function() {
-			console.log("Initialize application");
 			routes.init();
 			search.init();
 		}
@@ -11,7 +10,6 @@
 
 	var routes = {
 		init: function() {
-			console.log("Initialize routes");
 			var self = this;
 			window.addEventListener("hashchange", function(event) {
 				self.toggle(window.location.hash);
@@ -20,28 +18,21 @@
 		},
 
 		toggle: function(route) {
-			console.log("Toggling between the sections")
-
 			if(worker.update) {
 				worker.update.terminate();
-				console.log("Terminated worker")
 			}
 
 			switch(route.substring(0, 12)) {
 				case '':
-					console.log("I am empty. redirecting...")
 					window.location.hash = "#home";
 					break;
 				case "#home": 
-					console.log("Home sweet home");
 					route = "main__home"
 					break;
 				case "#query":
-					console.log("I am an empty query!");
 					route = "main__query"
 					break;
 				case "#query&user=":
-					console.log("I am a query with a user!");
 					var username = route.substring(12)
 					data.request(username, 'GET', 'https://api.github.com/users/' + username +'?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
 						data.searched.push(e.target.response);
@@ -52,44 +43,38 @@
 					route = "main__query";
 					break;
 				case '#list':
-				console.log("I am a list!")
 					search.history();
 					route = "main__list"
 					break;
 				case '#issues':
-				console.log("I have issues!")
-
-				if(localStorage.getItem("issuedata")) {
-					console.log("LS item exist")
-					data.issues = util.parse(localStorage.getItem('issuedata'));
-					issues.result();
-				}
-				else {
-					console.log("LS item does not")
-
-					var total = [];
-
-					for (var i = 0; i < data.repos.length; i++) {
-						var promised = data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
-							var parsed = util.parse(e.target.response);
-							for(var j = 0; j < parsed.length; j++) {
-								data.issues.push(parsed[j]);
-								
-							}
-
-						total.push(promised)
-
-						Promise.all(total).then(function() {
-							issues.result();
-							localStorage.setItem('issuedata', util.stringify(data.issues));
-						})
-
-
-						}, function(e) {
-							console.log(e)
-						})
+					if(localStorage.getItem("issuedata")) {
+						data.issues = util.parse(localStorage.getItem('issuedata'));
+						issues.result();
 					}
-				}
+					else {
+						var total = [];
+
+						for (var i = 0; i < data.repos.length; i++) {
+							var promised = data.request(data.repos[i], 'GET', 'https://api.github.com/users/' + data.repos[i] + '/repos?access_token=75442d9eb43dff41810ce1bc7b470b34c3805d80').then(function(e) {
+								var parsed = util.parse(e.target.response);
+								for(var j = 0; j < parsed.length; j++) {
+									data.issues.push(parsed[j]);
+									
+								}
+
+							total.push(promised)
+
+							Promise.all(total).then(function() {
+								issues.result();
+								localStorage.setItem('issuedata', util.stringify(data.issues));
+							})
+
+
+							}, function(e) {
+								console.log(e)
+							})
+						}
+					}
 
 					worker.init()
 
@@ -148,8 +133,6 @@
 
 		show: function(data) {
 			var info = util.parse(data)
-
-			console.log(info)
 
 			if(info.login) {
 				var result = document.getElementById("result").innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
@@ -261,20 +244,10 @@
 						data.stack += response[i][j].open_issues
 					}
 				}
-
-				if(data.issueAmount < data.stack) {
+				if(data.issueAmount !== data.stack) {
 					self.detect(response)
-					console.log("we have a new issue! :(")
 
 				}
-				else if(data.issueAmount > data.stack) {
-					self.detect(response)
-					console.log("someone closed an issue! :)")
-				}
-				else {
-					console.log("nothing happened.")
-				}
-
 			}
 
 			this.update.onerror = function(e) {
