@@ -134,12 +134,14 @@
 		show: function(data) {
 			var info = util.parse(data)
 
+			var result = document.getElementById("result")
+
 			if(info.login) {
-				var result = document.getElementById("result").innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
+				result.innerHTML = '<img class="avatar-image" alt="avatar" src="' + info.avatar_url + '"<p> Naam: ' + info.name + '</p> '
 			}
 			else {
 				this.searched.pop();
-				var result = document.getElementById("result").innerHTML = 'User does not exist'
+				result.innerHTML = 'User does not exist'
 			}
 		},
 
@@ -166,19 +168,31 @@
 			data.issueAmount = 0;
 
 			util.empty(listed)
-
-			for (var i = 0; i < data.issues.length; i++) {
 				
 				var tr = document.createElement("tr");
 				var name = document.createElement("th");
 				var owner = document.createElement("th");
 				var open = document.createElement("th");
+				var nameText = document.createTextNode('REPOSITORY:');
+				var ownerText = document.createTextNode('OWNER:');
+				var openText = document.createTextNode('OPEN ISSUES:');
+
+				listed.appendChild(tr)
+				tr.appendChild(name)
+				tr.appendChild(owner)
+				tr.appendChild(open)
+				name.appendChild(nameText)
+				owner.appendChild(ownerText)
+				open.appendChild(openText)
+
+			for (var i = 0; i < data.issues.length; i++) {
+
+				var tr = document.createElement("tr");
+
 				var nameContainer = document.createElement("td")
 				var ownerContainer = document.createElement("td")
 				var openContainer = document.createElement("td")
-				var nameText = document.createTextNode('REPOSITORY:');
-				var ownerText = document.createTextNode('EIGENAAR:');
-				var openText = document.createTextNode('OPEN ISSUES:');
+
 				var nameData = document.createTextNode(data.issues[i].name);
 				var ownerData = document.createTextNode(data.issues[i].owner.login);
 				var openData = document.createTextNode(data.issues[i].open_issues);
@@ -189,17 +203,11 @@
 				}
 
 				listed.appendChild(tr)
-				tr.appendChild(name)
 				tr.appendChild(nameContainer)
-				name.appendChild(nameText)
 				nameContainer.appendChild(nameData)
-				tr.appendChild(owner)
 				tr.appendChild(ownerContainer)
-				owner.appendChild(ownerText)
 				ownerContainer.appendChild(ownerData)
-				tr.appendChild(open)
 				tr.appendChild(openContainer)
-				open.appendChild(openText)
 				openContainer.appendChild(openData)
 
 			}
