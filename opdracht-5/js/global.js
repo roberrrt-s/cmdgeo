@@ -166,45 +166,45 @@
 			data.issueAmount = 0;
 
 			util.empty(listed)
-
-			for (var i = 0; i < data.issues.length; i++) {
+			
+			// for (var i = 0; i < data.issues.length; i++) {
 				
-				var tr = document.createElement("tr");
-				var name = document.createElement("th");
-				var owner = document.createElement("th");
-				var open = document.createElement("th");
-				var nameContainer = document.createElement("td")
-				var ownerContainer = document.createElement("td")
-				var openContainer = document.createElement("td")
-				var nameText = document.createTextNode('REPOSITORY:');
-				var ownerText = document.createTextNode('EIGENAAR:');
-				var openText = document.createTextNode('OPEN ISSUES:');
-				var nameData = document.createTextNode(data.issues[i].name);
-				var ownerData = document.createTextNode(data.issues[i].owner.login);
-				var openData = document.createTextNode(data.issues[i].open_issues);
+			// 	var tr = document.createElement("tr");
+			// 	var name = document.createElement("th");
+			// 	var owner = document.createElement("th");
+			// 	var open = document.createElement("th");
+			// 	var nameContainer = document.createElement("td")
+			// 	var ownerContainer = document.createElement("td")
+			// 	var openContainer = document.createElement("td")
+			// 	var nameText = document.createTextNode('REPOSITORY:');
+			// 	var ownerText = document.createTextNode('EIGENAAR:');
+			// 	var openText = document.createTextNode('OPEN ISSUES:');
+			// 	var nameData = document.createTextNode(data.issues[i].name);
+			// 	var ownerData = document.createTextNode(data.issues[i].owner.login);
+			// 	var openData = document.createTextNode(data.issues[i].open_issues);
 
-				if(data.issues[i].open_issues > 0) {
-					openContainer.classList.add("has-issues")
-					data.issueAmount += data.issues[i].open_issues;
-				}
+			// 	if(data.issues[i].open_issues > 0) {
+			// 		openContainer.classList.add("has-issues")
+			// 		data.issueAmount += data.issues[i].open_issues;
+			// 	}
 
-				listed.appendChild(tr)
-				tr.appendChild(name)
-				tr.appendChild(nameContainer)
-				name.appendChild(nameText)
-				nameContainer.appendChild(nameData)
-				tr.appendChild(owner)
-				tr.appendChild(ownerContainer)
-				owner.appendChild(ownerText)
-				ownerContainer.appendChild(ownerData)
-				tr.appendChild(open)
-				tr.appendChild(openContainer)
-				open.appendChild(openText)
-				openContainer.appendChild(openData)
+			// 	listed.appendChild(tr)
+			// 	tr.appendChild(name)
+			// 	tr.appendChild(nameContainer)
+			// 	name.appendChild(nameText)
+			// 	nameContainer.appendChild(nameData)
+			// 	tr.appendChild(owner)
+			// 	tr.appendChild(ownerContainer)
+			// 	owner.appendChild(ownerText)
+			// 	ownerContainer.appendChild(ownerData)
+			// 	tr.appendChild(open)
+			// 	tr.appendChild(openContainer)
+			// 	open.appendChild(openText)
+			// 	openContainer.appendChild(openData)
 
-			}
+			// }
 
-			var total = document.getElementById("total-issues").innerHTML = "The total amount of issue's in these repos is: " + data.issueAmount;
+			// var total = document.getElementById("total-issues").innerHTML = "The total amount of issue's in these repos is: " + data.issueAmount;
 
 		}
 	};
