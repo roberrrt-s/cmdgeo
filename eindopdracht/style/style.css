@@ -5,6 +5,10 @@
 	font-family: sans-serif;
 }
 
+img {
+	max-width: 90%;
+}
+
 section[role="navigation"] {
 	height: 7vh;
 }
