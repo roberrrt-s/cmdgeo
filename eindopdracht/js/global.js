@@ -217,29 +217,44 @@
 			else {
 
 				var section = document.getElementById('main__tracker')
+
 				util.empty(section)
+				
 				for(var user in data.memory) {
+
 					var login = user;
+					
 					for(var repo in data.memory[user].repositories) {
 						for(var i = 0; i < data.memory[user].repositories[repo].issues.length; i++) {
+							
 							var div = document.createElement('div')
+							
 							section.appendChild(div)
+							
 							div.classList.add("block-element")
+							
 							if(data.memory[user].repositories[repo].issues[i].pull_request) {
 								div.classList.add('pull-request')
 							}
 							else {
 								div.classList.add('issue')
 							}
+							
+							// ES6 FTW!
 							var string = `<h2>${data.memory[user].repositories[repo].issues[i].title}</h2> <h4>Posted by: ${data.memory[user].repositories[repo].issues[i].user.login} on ${login}'s repository</h4> <hr> <p>${data.memory[user].repositories[repo].issues[i].body}<br></p><p><a href="${data.memory[user].repositories[repo].issues[i].html_url}">View details</a>`
+							
+							// Placing the string inside the created block for each issue.
 							div.innerHTML = string;
 						}
 					}
 				}
 			}
 		},
-		
+
+		// Create the statistics template
 		statistics: function() {
+
+			// If there is data, continue, else, show the loading
 			if(data.checkMemory()) {
 				data.loading()
 			}
@@ -252,35 +267,48 @@
 
 				var i = 0, j = 0, k = 0;
 				var all = data.count()
+
 				var isPullRequest = function(element, index, array) {
 					return (!element.pull_request);
 				}
+
 				var isIssue = function(element, index, array) {
 					return (element.pull_request);
 				}
+
 				var pull = all.filter(isPullRequest);
 				var issues = all.filter(isIssue);
+
+				// Sorry Laurens, dit zouden functies moeten zijn...
+
 				var intall = setInterval(function() {
+
 					if(i === all.length) {
 						clearInterval(intall)
 					}
+
 					var counter = `<div class="statistics">Total amount of problems: ${i} </div>`
 					allcontainer.innerHTML = counter
 					i++
+
 				}, 15)
 				var intpull = setInterval(function() {
+
 					if(j === pull.length) {
 						clearInterval(intpull)
 					}
+
 					var counter = `<div class="statistics">Total amount of pull requests: ${j} </div>`
 					pullcontainer.innerHTML = counter
 					j++
 
 				}, 15)
 				var intiss = setInterval(function() {
+
 					if(k === issues.length) {
 						clearInterval(intiss)
 					}
+
 					var counter = `<div class="statistics">Total amount of issues: ${k} </div>`
 					issuecontainer.innerHTML = counter
 					k++	
@@ -289,6 +317,7 @@
 		}
 	}
  
+	// localStorage to spare the rate limit, and avoid the loading screen
 	var local = {
 		init: function() {
 			if(this.retrieve("memory")) {
@@ -306,6 +335,7 @@
 		}
 	};
 
+	// Utility object to parse / stringify JSOn, and to empty an element
 	var util = {
 		parse: function(data) {
 			return JSON.parse(data);
