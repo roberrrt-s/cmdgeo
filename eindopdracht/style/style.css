@@ -6,7 +6,7 @@
 }
 
 img {
-	max-width: 90%;
+	max-width: 90% !important;
 }
 
 section[role="navigation"] {

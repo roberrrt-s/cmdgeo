@@ -189,6 +189,8 @@
 			// Return the array to manipulate data with later
 			return counter;
 		},
+
+		// Function to display feedback while data isn't loaded yet.
 		loading: function() {
 			var string = `<p>No data yet, asking Github for information...</p><img src="img/spinner.gif" alt="waiting...">`
 			var stats = document.getElementById("main__stats")
@@ -196,15 +198,24 @@
 			stats.innerHTML = string;
 			tracker.innerHTML = string;
 		},
+
+		// Local data storage variable
 		memory: []
 	};
 
+
+	// RobertTemplates 1.0
 	var template = {
+
+		// Create the tracker template
 		tracker: function() {
+
+			// If there is data, continue, else, show the loading
 			if(data.checkMemory()) {
 				data.loading()
 			}
 			else {
+
 				var section = document.getElementById('main__tracker')
 				util.empty(section)
 				for(var user in data.memory) {
@@ -227,6 +238,7 @@
 				}
 			}
 		},
+		
 		statistics: function() {
 			if(data.checkMemory()) {
 				data.loading()
@@ -237,6 +249,7 @@
 				var allcontainer = document.getElementById("allcontainer")
 				var pullcontainer = document.getElementById("pullcontainer")
 				var issuecontainer = document.getElementById("issuecontainer")
+
 				var i = 0, j = 0, k = 0;
 				var all = data.count()
 				var isPullRequest = function(element, index, array) {
