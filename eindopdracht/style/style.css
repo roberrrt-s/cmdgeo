@@ -1,0 +1,84 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+section[role="navigation"] {
+	height: 7vh;
+}
+
+section[role="navigation"] ul {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	height: 7vh;
+}
+
+section[role="navigation"] li {
+	list-style-type: none;
+	text-align: center;
+	background-color: #333;
+	width: 33.33333%;
+	height: 7vh;
+}
+
+section[role="navigation"] li:hover {
+	background-color: #111;
+}
+
+section[role="navigation"] a {
+	color: #FFF;
+	text-decoration: none;
+	line-height: 7vh;
+	padding: 1em;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	text-align: left;
+}
+
+body > section:not([role="navigation"]) {
+	max-width: 50em;
+	min-height: 93vh;
+	padding: 1em;
+	margin: auto;
+	text-align: center;
+}
+
+#main__home img {
+	max-width: 30em;
+	margin: auto;
+}
+
+#main__stats img, #main__tracker img {
+	max-width: 5em;
+	margin: 0;
+}
+
+.block-element {
+	max-width: 40em;
+	min-height: 100px;
+	margin: 1em auto;
+	padding: 0.5em 0.5em 1em 0.5em;
+	text-align: left;
+	border: 1px solid #000;
+	overflow: hidden 	;
+}
+
+.block-element hr {
+	margin: 0.1em 0 0.3em 0;
+}
+
+.issue {
+	background-color: #FEF;
+}
+
+.pull-request {
+	background-color: #EFF;
+}
+
+.no-display {
+	display: none;
+}
