@@ -1,3 +1,6 @@
+// CMDA Github Dashboard
+// Author: Robert Spier
+
 (function() {
 	"use strict";
 
@@ -9,17 +12,61 @@
 		}
 	};
 
-	var routes = {
+	var routes = {CMDA Github Dashboard
 		init: function() {
 
 			var self = this;
 
 			window.addEventListener("hashchange", function(event) {
 				self.toggle(window.location.hash);
-			});
+			});	
+
+			window.addEventListener('load', function() { 
+			    var element = document.querySelector('body');
+			    var hamleft = Hammer(element).on("swipeleft", function(event) {
+			        self.swipeLeft()
+			    })
+			    var hamright = Hammer(element).on("swipeleft", function(event) {
+			        self.swipeRight()
+			    })
+			}, false);
+
+			document.onkeydown = function(evt) {
+				evt = evt || window.event;
+				switch (evt.keyCode) {
+					case 37:
+						self.swipeLeft()
+						break;
+					case 39:
+						self.swipeRight()
+						break;
+				}
+			};
 
 			this.toggle(window.location.hash);
 
+		},
+
+		swipeLeft: function() {
+			if(window.location.hash == "#home") {
+				return false;
+			}
+			else if(window.location.hash == "#tracker")
+				window.location.hash = "#home";
+			else {
+				window.location.hash = "#tracker"
+			}			
+		},
+
+		swipeRight: function() {
+			if(window.location.hash == "#stats") {
+				return false;
+			}
+			else if(window.location.hash == "#tracker")
+				window.location.hash = "#stats";
+			else {
+				window.location.hash = "#tracker"
+			}
 		},
 
 		toggle: function(route) {
@@ -55,7 +102,7 @@
 	var worker = {
 		init: function() {
 
-			this.update = new Worker("js/update3.js");
+			this.update = new Worker("js/update.js");
 			this.events()
 
 		},
@@ -65,9 +112,6 @@
 				localStorage.clear()
 				local.insert("memory", e.data);
 				data.memory = e.data;
-
-				console.log("new data!")
-				console.log(data.memory)
 
 				if(window.location.hash === "#tracker") {
 					template.tracker();
@@ -93,11 +137,11 @@
 
 		count: function() {
 
-			var counter = 0;
+			var counter = [];
 
 			for(var user in this.memory) {
 				for(var repo in this.memory[user].repositories) {
-					counter += this.memory[user].repositories[repo].issues.length;
+					counter = counter.concat(this.memory[user].repositories[repo].issues);
 				}
 			}
 
@@ -134,7 +178,6 @@
 
 							section.appendChild(div)
 							div.classList.add("block-element")
-							console.log(data.memory[user].repositories[repo].issues[i])
 
 							if(data.memory[user].repositories[repo].issues[i].pull_request) {
 								div.classList.add('pull-request')
@@ -158,22 +201,62 @@
 				data.loading()
 			}
 			else {
+				
+			var stats = document.getElementById('main__stats')
 
-			var stats = document.getElementById("main__stats")
+			var allcontainer = document.getElementById("allcontainer")
+			var pullcontainer = document.getElementById("pullcontainer")
+			var issuecontainer = document.getElementById("issuecontainer")
 
-			util.empty(stats)
 
-			var i = 0;
-			var count = data.count()
+			var i = 0, j = 0, k = 0;
+			var all = data.count()
 
-			var interval = setInterval(function() {
-				if(i === count) {
-					clearInterval(interval)
+			var isPullRequest = function(element, index, array) {
+				return (!element.pull_request);
+			}
+			var isIssue = function(element, index, array) {
+				return (element.pull_request);
+			}
+
+			var pull = all.filter(isPullRequest);
+			var issues = all.filter(isIssue);
+
+			var intall = setInterval(function() {
+				if(i === all.length) {
+					clearInterval(intall)
 				}
+
+				var counter = `<div class="statistics">Total amount of problems: ${i} </div>`
+				allcontainer.innerHTML = counter
+
 				i++
-				var counter = `<div id="statistics">Total amount of issues: ${i} </div>`
-				stats.innerHTML = counter
-			}, 13)
+
+			}, 15)
+
+			var intpull = setInterval(function() {
+				if(j === pull.length) {
+					clearInterval(intpull)
+				}
+
+				var counter = `<div class="statistics">Total amount of pull requests: ${j} </div>`
+				pullcontainer.innerHTML = counter
+
+				j++
+
+			}, 15)
+
+			var intiss = setInterval(function() {
+				if(k === issues.length) {
+					clearInterval(intiss)
+				}
+
+				var counter = `<div class="statistics">Total amount of issues: ${k} </div>`
+				issuecontainer.innerHTML = counter
+
+				k++	
+
+			}, 15)
 
 			}
 		}

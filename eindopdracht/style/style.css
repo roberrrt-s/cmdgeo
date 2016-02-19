@@ -64,7 +64,7 @@ body > section:not([role="navigation"]) {
 	padding: 0.5em 0.5em 1em 0.5em;
 	text-align: left;
 	border: 1px solid #000;
-	overflow: hidden 	;
+	overflow: hidden;
 }
 
 .block-element hr {
