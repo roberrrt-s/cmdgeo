@@ -9,6 +9,11 @@ img {
 	max-width: 90% !important;
 }
 
+#flow-container {
+	max-width: 90%;
+	overflow: hidden;
+}
+
 section[role="navigation"] {
 	height: 7vh;
 }
