@@ -284,3 +284,11 @@
 	global.init();
 
 }());
+
+
+// Review raymond:
+// Ik zou een template library gebruiken voor het genereren van je html.
+// Nu creëer je elementen en append je ze aan de html wat voor onoverzichtelijke code zorgt.
+// Met een template library kan je de structuur van je html makkelijk aanpassen en zijn for loops niet nodig
+// Je gebruikt .on en addEventListener door elkaar. Blijf consistent door één van de twee te gebruiken.
+// Op regel 155 en 159 roep je twee keer document.getElementById aan, terwijl je dit ook één keer kan doen door het in een variabele te zetten
